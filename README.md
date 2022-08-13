@@ -1,7 +1,7 @@
 # Simple yet highly extensible package for A/B testing in PHP
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/graymatterlabs/experiment.svg?style=flat-square)](https://packagist.org/packages/graymatterlabs/experiment)
-[![Tests](https://github.com/graymatterlabs/experiment/actions/workflows/run-tests.yml/badge.svg?branch=main)](https://github.com/graymatterlabs/experiment/actions/workflows/run-tests.yml)
+[![Tests](https://github.com/graymatterlabs/experiment/actions/workflows/run-tests.yml/badge.svg?branch=master)](https://github.com/graymatterlabs/experiment/actions/workflows/run-tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/graymatterlabs/experiment.svg?style=flat-square)](https://packagist.org/packages/graymatterlabs/experiment)
 
 This package makes no opinions on how you store your experiment data. Bring your own implementation of `GrayMatterLabs\Experiment\Contracts\Persistence` or use one of the provided implementations.
@@ -10,7 +10,7 @@ How you choose to implement your `GrayMatterLabs\Experiment\Contracts\Factory` w
 
 Similarly, you may choose to and are encouraged to configure your experiments in a dynamic and/or data-backed way by instantiating them with data from any number of storage mechanisms as well as in any shape you see fit. What's provided out of the box with `GrayMatterLabs\Experiment\Experiment` is an example of static configuration that lives only in code.
 
-In general, this package attempts to not strictly enforce opinions as much possible but rather provide an open-ended framework for A/B testing that minimizes complexity and overhead.
+In general, this package attempts to not strictly enforce opinions as much as possible but rather provide an open-ended framework for A/B testing that minimizes complexity and overhead.
 
 ## Installation
 
