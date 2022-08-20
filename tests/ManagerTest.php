@@ -7,9 +7,9 @@ namespace GrayMatterLabs\Experiment\Tests;
 use GrayMatterLabs\Experiment\Factories\ClassFactory;
 use GrayMatterLabs\Experiment\Manager;
 use GrayMatterLabs\Experiment\Persistence\SimpleCachePersistence;
-use GrayMatterLabs\Experiment\Tests\Mocks\ArrayCache;
 use GrayMatterLabs\Experiment\Tests\Mocks\MockExperiment;
 use GrayMatterLabs\Experiment\Tests\Mocks\MockSample;
+use GrayMatterLabs\SimpleCache\ArrayCache;
 use PHPUnit\Framework\TestCase;
 
 class ManagerTest extends TestCase
