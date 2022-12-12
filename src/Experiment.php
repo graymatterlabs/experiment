@@ -14,7 +14,8 @@ abstract class Experiment implements ExperimentContract
 
     protected string $name;
 
-    public function getIdentifier(): string|int {
+    public function getIdentifier(): string|int
+    {
         if (! empty($this->identifier)) {
             return $this->identifier;
         }

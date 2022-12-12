@@ -24,7 +24,7 @@ interface Variant
     /**
      * Determine whether two variants are the same.
      */
-    public function is(string|int|Variant $variant) : bool;
+    public function is(string|int|Variant $variant): bool;
 
     /**
      * Determine whether two variants are equal by name.

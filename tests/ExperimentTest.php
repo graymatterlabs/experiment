@@ -6,8 +6,8 @@ namespace GrayMatterLabs\Experiment\Tests;
 
 use GrayMatterLabs\Experiment\Contracts\Factory;
 use GrayMatterLabs\Experiment\Contracts\Variant as VariantContract;
-use GrayMatterLabs\Experiment\Factories\MemoizedFactory;
 use GrayMatterLabs\Experiment\Factories\ClassFactory;
+use GrayMatterLabs\Experiment\Factories\MemoizedFactory;
 use GrayMatterLabs\Experiment\Tests\Mocks\MockExperiment;
 use GrayMatterLabs\Experiment\Tests\Mocks\MockSample;
 use GrayMatterLabs\Experiment\Variant;
