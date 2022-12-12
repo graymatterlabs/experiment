@@ -8,8 +8,13 @@ use GrayMatterLabs\Experiment\Contracts\Variant as VariantContract;
 
 class Variant implements VariantContract
 {
-    public function __construct(protected string $name, protected int $weight = 1)
+    public function __construct(protected string|int $identifier, public string $name, protected int $weight = 1)
     {
+    }
+
+    public function getIdentifier(): string|int
+    {
+        return $this->identifier;
     }
 
     public function getName(): string
@@ -22,17 +27,21 @@ class Variant implements VariantContract
         return $this->weight;
     }
 
-    public function equals(string|VariantContract $variant): bool
+    public function is(string|int|VariantContract $variant): bool
     {
         if ($variant instanceof VariantContract) {
-            $variant = $variant->getName();
+            $variant = $variant->getIdentifier();
         }
 
-        return strcasecmp($this->getName(), $variant) === 0;
+        if (is_numeric($identifier = $this->getIdentifier())) {
+            return is_numeric($variant) && (int) $identifier === (int) $variant;
+        }
+
+        return strcasecmp($identifier, (string) $variant) === 0;
     }
 
-    public function __toString()
+    public function equals(string $name): bool
     {
-        return $this->getName();
+        return strcasecmp($this->getName(), $name) === 0;
     }
 }

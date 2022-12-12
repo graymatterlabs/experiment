@@ -48,7 +48,7 @@ class Manager
     {
         $instance = $this->getExperimentInstance($experiment);
 
-        if (! $variantInstance = $instance->getVariant($variant)) {
+        if (! $variantInstance = $instance->getVariantByName($variant)) {
             throw new InvalidArgumentException(sprintf('Unable to force invalid variant [%s].', $variant));
         }
 

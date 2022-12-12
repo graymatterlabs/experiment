@@ -10,7 +10,17 @@ use GrayMatterLabs\Experiment\Contracts\Variant;
 
 abstract class Experiment implements ExperimentContract
 {
+    protected string|int $identifier;
+
     protected string $name;
+
+    public function getIdentifier(): string|int {
+        if (! empty($this->identifier)) {
+            return $this->identifier;
+        }
+
+        return $this->getName();
+    }
 
     public function getName(): string
     {
@@ -60,10 +70,21 @@ abstract class Experiment implements ExperimentContract
 
     abstract public function getVariants(): array;
 
-    public function getVariant(string $variant): ?Variant
+    public function getVariantByName(string $name): ?Variant
     {
         foreach ($this->getVariants() as $instance) {
-            if ($instance->equals($variant)) {
+            if ($instance->equals($name)) {
+                return $instance;
+            }
+        }
+
+        return null;
+    }
+
+    public function getVariantByIdentifier(string|int $identifier): ?Variant
+    {
+        foreach ($this->getVariants() as $instance) {
+            if ($instance->is($identifier)) {
                 return $instance;
             }
         }
