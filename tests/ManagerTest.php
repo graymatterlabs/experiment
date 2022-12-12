@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace GrayMatterLabs\Experiment\Tests;
 
 use GrayMatterLabs\Experiment\Factories\ClassFactory;
+use GrayMatterLabs\Experiment\Factories\MemoizedFactory;
 use GrayMatterLabs\Experiment\Manager;
 use GrayMatterLabs\Experiment\Persistence\SimpleCachePersistence;
 use GrayMatterLabs\Experiment\Tests\Mocks\MockExperiment;
@@ -68,7 +69,7 @@ class ManagerTest extends TestCase
     {
         return new Manager(
             new SimpleCachePersistence(new ArrayCache()),
-            new ClassFactory()
+            new MemoizedFactory(new ClassFactory())
         );
     }
 }

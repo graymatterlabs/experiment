@@ -27,7 +27,7 @@ class SimpleCachePersistence implements Persistence
             return null;
         }
 
-        return $experiment->getVariant($name);
+        return $experiment->getVariantByName($name);
     }
 
     public function removeSampleFromExperiment(Experiment $experiment, Sample $sample): bool

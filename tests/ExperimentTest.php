@@ -7,6 +7,7 @@ namespace GrayMatterLabs\Experiment\Tests;
 use GrayMatterLabs\Experiment\Contracts\Factory;
 use GrayMatterLabs\Experiment\Contracts\Variant as VariantContract;
 use GrayMatterLabs\Experiment\Factories\ClassFactory;
+use GrayMatterLabs\Experiment\Factories\MemoizedFactory;
 use GrayMatterLabs\Experiment\Tests\Mocks\MockExperiment;
 use GrayMatterLabs\Experiment\Tests\Mocks\MockSample;
 use GrayMatterLabs\Experiment\Variant;
@@ -46,8 +47,8 @@ class ExperimentTest extends TestCase
     public function test_it_favors_the_variant_with_highest_weight(): void
     {
         $experiment = $this->factory()->make(MockExperiment::class)->setVariants([
-            new Variant('CONTROL', 10),
-            new Variant('TEST', 0),
+            new Variant(1, 'CONTROL', 10),
+            new Variant(2, 'TEST', 0),
         ]);
 
         $this->assertTrue($experiment->allocate(new MockSample())->equals('CONTROL'));
@@ -72,11 +73,17 @@ class ExperimentTest extends TestCase
     public function test_it_gets_a_variant_by_name(): void
     {
         $experiment = $this->factory()->make(MockExperiment::class);
-        $this->assertInstanceOf(VariantContract::class, $experiment->getVariant('CONTROL'));
+        $this->assertInstanceOf(VariantContract::class, $experiment->getVariantByName('CONTROL'));
+    }
+
+    public function test_it_gets_a_variant_by_identifier(): void
+    {
+        $experiment = $this->factory()->make(MockExperiment::class);
+        $this->assertInstanceOf(VariantContract::class, $experiment->getVariantByIdentifier(1));
     }
 
     public function factory(): Factory
     {
-        return new ClassFactory();
+        return new MemoizedFactory(new ClassFactory());
     }
 }

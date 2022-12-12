@@ -1,0 +1,21 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method GrayMatterLabs\\\\Experiment\\\\Contracts\\\\Experiment\\:\\:setEligibilityCallback\\(\\)\\.$#"
+			count: 1
+			path: tests/ExperimentTest.php
+
+		-
+			message: "#^Call to an undefined method GrayMatterLabs\\\\Experiment\\\\Contracts\\\\Experiment\\:\\:setEnabled\\(\\)\\.$#"
+			count: 1
+			path: tests/ExperimentTest.php
+
+		-
+			message: "#^Call to an undefined method GrayMatterLabs\\\\Experiment\\\\Contracts\\\\Experiment\\:\\:setName\\(\\)\\.$#"
+			count: 1
+			path: tests/ExperimentTest.php
+
+		-
+			message: "#^Call to an undefined method GrayMatterLabs\\\\Experiment\\\\Contracts\\\\Experiment\\:\\:setVariants\\(\\)\\.$#"
+			count: 1
+			path: tests/ExperimentTest.php

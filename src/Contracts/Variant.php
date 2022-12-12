@@ -4,30 +4,30 @@ declare(strict_types=1);
 
 namespace GrayMatterLabs\Experiment\Contracts;
 
-use Stringable;
-
-interface Variant extends Stringable
+interface Variant
 {
     /**
+     * Get the unique identifier of the variant.
+     */
+    public function getIdentifier(): string|int;
+
+    /**
      * Get the name of the variant.
-     *
-     * @return string
      */
     public function getName(): string;
 
     /**
      * Get the variant's weight.
-     *
-     * @return int
      */
     public function getWeight(): int;
 
     /**
-     * Determine whether the variant values are equal.
-     *
-     * @param string|\GrayMatterLabs\Experiment\Contracts\Variant $variant
-     *
-     * @return bool
+     * Determine whether two variants are the same.
      */
-    public function equals(string|Variant $variant): bool;
+    public function is(string|int|Variant $variant): bool;
+
+    /**
+     * Determine whether two variants are equal by name.
+     */
+    public function equals(string $name);
 }

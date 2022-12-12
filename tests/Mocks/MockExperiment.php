@@ -20,8 +20,8 @@ class MockExperiment extends Experiment
     public function getVariants(): array
     {
         return $this->variants ?: [
-            new Variant('CONTROL'),
-            new Variant('TEST'),
+            new Variant(1, 'CONTROL'),
+            new Variant(2, 'TEST'),
         ];
     }
 
