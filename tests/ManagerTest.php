@@ -67,7 +67,6 @@ class ManagerTest extends TestCase
         $this->assertNotNull($manager->getVariant(MockExperiment::class, $sample));
     }
 
-
     public function test_it_requires_the_experiment_have_variants(): void
     {
         $manager = $this->getManager($factory = $this->factory());
