@@ -5,21 +5,40 @@ declare(strict_types=1);
 namespace GrayMatterLabs\Experiment\Tests\Mocks;
 
 use Closure;
+use GrayMatterLabs\Experiment\Contracts\Experiment;
 use GrayMatterLabs\Experiment\Contracts\Sample;
-use GrayMatterLabs\Experiment\Experiment;
+use GrayMatterLabs\Experiment\Contracts\Variant as VariantContract;
 use GrayMatterLabs\Experiment\Variant;
 
-class MockExperiment extends Experiment
+class MockExperiment implements Experiment
 {
-    protected array $variants = [];
+    protected string $name;
+
+    protected array $variants;
 
     protected ?Closure $eligibility = null;
 
     protected bool $enabled = true;
 
+    public function getIdentifier(): string|int
+    {
+        return 1;
+    }
+
+    public function getName(): string
+    {
+        if (isset($this->name)) {
+            return $this->name;
+        }
+
+        $exploded = explode('\\', static::class);
+
+        return end($exploded);
+    }
+
     public function getVariants(): array
     {
-        return $this->variants ?: [
+        return $this->variants ?? [
             new Variant(1, 'CONTROL'),
             new Variant(2, 'TEST'),
         ];
@@ -28,13 +47,6 @@ class MockExperiment extends Experiment
     public function setVariants(array $variants): static
     {
         $this->variants = $variants;
-
-        return $this;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
 
         return $this;
     }
@@ -63,5 +75,32 @@ class MockExperiment extends Experiment
         $this->enabled = $enabled;
 
         return $this;
+    }
+
+    public function getVariantByName(string $name): ?VariantContract
+    {
+        foreach ($this->getVariants() as $instance) {
+            if ($instance->equals($name)) {
+                return $instance;
+            }
+        }
+
+        return null;
+    }
+
+    public function getVariantByIdentifier(string|int $identifier): ?VariantContract
+    {
+        foreach ($this->getVariants() as $instance) {
+            if ($instance->is($identifier)) {
+                return $instance;
+            }
+        }
+
+        return null;
+    }
+
+    public function apply(Sample $sample, VariantContract $variant): void
+    {
+        //
     }
 }

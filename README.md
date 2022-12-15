@@ -8,7 +8,7 @@ This package makes no opinions on how you store your experiment data. Bring your
 
 How you choose to implement your `GrayMatterLabs\Experiment\Contracts\Factory` will determine how you reference your experiments throughout the code. By default, there is an implementation provided that references experiments by their fully qualified class names.
 
-Similarly, you may choose to and are encouraged to configure your experiments in a dynamic and/or data-backed way by instantiating them with data from any number of storage mechanisms as well as in any shape you see fit. What's provided out of the box with `GrayMatterLabs\Experiment\Experiment` is an example of static configuration that lives only in code.
+Similarly, you may choose to and are encouraged to configure your experiments in a dynamic and/or data-backed way by instantiating them with data from any number of storage mechanisms as well as in any shape you see fit.
 
 In general, this package attempts to not strictly enforce opinions as much as possible but rather provide an open-ended framework for A/B testing that minimizes complexity and overhead.
 
@@ -23,7 +23,7 @@ composer require graymatterlabs/experiment:^0.1
 ## Usage
 
 ```php
-$manager = new Manager($persistence, $factory);
+$manager = new Manager($persistence, $factory, $strategy);
 $sample = new Sample();
 
 $variant = $manager->allocate($experiment, $sample);

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace GrayMatterLabs\Experiment\Tests;
 
+use GrayMatterLabs\Experiment\Contracts\Factory;
 use GrayMatterLabs\Experiment\Factories\ClassFactory;
 use GrayMatterLabs\Experiment\Factories\MemoizedFactory;
 use GrayMatterLabs\Experiment\Manager;
 use GrayMatterLabs\Experiment\Persistence\SimpleCachePersistence;
+use GrayMatterLabs\Experiment\Strategies\WeightedStrategy;
 use GrayMatterLabs\Experiment\Tests\Mocks\MockExperiment;
 use GrayMatterLabs\Experiment\Tests\Mocks\MockSample;
 use GrayMatterLabs\SimpleCache\ArrayCache;
@@ -56,7 +58,7 @@ class ManagerTest extends TestCase
         $this->assertTrue($manager->isAllocated(MockExperiment::class, $sample));
     }
 
-    public function test_it_gets_the_allocated_variant(): void
+    public function test_it_gets_the_previously_allocated_variant(): void
     {
         $manager = $this->getManager();
         $sample = new MockSample();
@@ -65,11 +67,43 @@ class ManagerTest extends TestCase
         $this->assertNotNull($manager->getVariant(MockExperiment::class, $sample));
     }
 
-    public function getManager(): Manager
+
+    public function test_it_requires_the_experiment_have_variants(): void
+    {
+        $manager = $this->getManager($factory = $this->factory());
+        $sample = new MockSample();
+        $factory->make(MockExperiment::class)->setVariants([]);
+        $this->assertNull($manager->allocate(MockExperiment::class, $sample));
+        $this->assertNull($manager->getVariant(MockExperiment::class, $sample));
+    }
+
+    public function test_it_requires_the_sample_be_eligible(): void
+    {
+        $manager = $this->getManager($factory = $this->factory());
+        $factory->make(MockExperiment::class)->setEligibilityCallback(fn () => false);
+        $variant = $manager->allocate(MockExperiment::class, new MockSample());
+        $this->assertNull($variant);
+    }
+
+    public function test_it_requires_the_experiment_be_enabled(): void
+    {
+        $manager = $this->getManager($factory = $this->factory());
+        $factory->make(MockExperiment::class)->setEnabled(false);
+        $variant = $manager->allocate(MockExperiment::class, new MockSample());
+        $this->assertNull($variant);
+    }
+
+    public function getManager(Factory $factory = null): Manager
     {
         return new Manager(
             new SimpleCachePersistence(new ArrayCache()),
-            new MemoizedFactory(new ClassFactory())
+            $factory ?? $this->factory(),
+            new WeightedStrategy()
         );
+    }
+
+    public function factory(): Factory
+    {
+        return new MemoizedFactory(new ClassFactory());
     }
 }

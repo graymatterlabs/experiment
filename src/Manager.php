@@ -8,12 +8,13 @@ use GrayMatterLabs\Experiment\Contracts\Experiment;
 use GrayMatterLabs\Experiment\Contracts\Factory;
 use GrayMatterLabs\Experiment\Contracts\Persistence;
 use GrayMatterLabs\Experiment\Contracts\Sample;
+use GrayMatterLabs\Experiment\Contracts\Strategy;
 use GrayMatterLabs\Experiment\Contracts\Variant;
 use InvalidArgumentException;
 
 class Manager
 {
-    public function __construct(protected Persistence $persistence, protected Factory $factory)
+    public function __construct(protected Persistence $persistence, protected Factory $factory, protected Strategy $strategy)
     {
     }
 
@@ -25,9 +26,15 @@ class Manager
             return $variant;
         }
 
-        if (! $variant = $instance->allocate($sample)) {
+        if (! $instance->isEnabled() || empty($instance->getVariants()) || ! $instance->isEligible($sample)) {
             return null;
         }
+
+        if (! $variant = $this->strategy->execute($instance, $sample)) {
+            return null;
+        }
+
+        $instance->apply($sample, $variant);
 
         $this->persistence->setVariantForSample($instance, $sample, $variant);
 
