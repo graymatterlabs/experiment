@@ -17,11 +17,6 @@ interface Experiment
     public function getName(): string;
 
     /**
-     * Allocate the sample to the experiment.
-     */
-    public function allocate(Sample $sample): ?Variant;
-
-    /**
      * Whether the sample is eligible for the experiment.
      */
     public function isEligible(Sample $sample): bool;
