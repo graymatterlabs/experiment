@@ -10,6 +10,7 @@ use GrayMatterLabs\Experiment\Contracts\Persistence;
 use GrayMatterLabs\Experiment\Contracts\Sample;
 use GrayMatterLabs\Experiment\Contracts\Strategy;
 use GrayMatterLabs\Experiment\Contracts\Variant;
+use GrayMatterLabs\Experiment\Support\Variants;
 use InvalidArgumentException;
 
 class Manager
@@ -51,12 +52,12 @@ class Manager
         return $this->persistence->getVariantForSample($this->getExperimentInstance($experiment), $sample) !== null;
     }
 
-    public function force(string $experiment, Sample $sample, string $variant): void
+    public function force(string $experiment, Sample $sample, string $variantName): void
     {
         $instance = $this->getExperimentInstance($experiment);
 
-        if (! $variantInstance = $instance->getVariantByName($variant)) {
-            throw new InvalidArgumentException(sprintf('Unable to force invalid variant [%s].', $variant));
+        if (! $variantInstance = (new Variants(...$instance->getVariants()))->whereName($variantName)) {
+            throw new InvalidArgumentException(sprintf('Unable to force invalid variant [%s].', $variantName));
         }
 
         if ($this->persistence->getVariantForSample($instance, $sample) !== null) {
