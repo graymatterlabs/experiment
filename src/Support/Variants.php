@@ -17,7 +17,7 @@ final class Variants
 
     public function whereName(string $name): ?Variant
     {
-        return $this->first(fn($variant) => strcasecmp($variant->getName(), $name) === 0);
+        return $this->first(fn ($variant) => strcasecmp($variant->getName(), $name) === 0);
     }
 
     public function whereIdentifier(int|string $identifier): ?Variant
