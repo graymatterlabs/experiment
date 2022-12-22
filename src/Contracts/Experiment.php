@@ -9,7 +9,7 @@ interface Experiment
     /**
      * Get the unique identifier of the experiment.
      */
-    public function getIdentifier(): int|string;
+    public function getIdentifier(): string|int;
 
     /**
      * Get the name of the experiment.
@@ -27,21 +27,9 @@ interface Experiment
     public function isEnabled(): bool;
 
     /**
-     * Get the variants.
-     *
-     * @return Variant[]
+     * Get the experiments' variants.
      */
     public function getVariants(): array;
-
-    /**
-     * Get the variant by name, if it exists.
-     */
-    public function getVariantByName(string $name): ?Variant;
-
-    /**
-     * Get the variant by it's unique identifier, if it exists.
-     */
-    public function getVariantByIdentifier(string|int $identifier);
 
     /**
      * Perform any actions after the sample has been allocated.

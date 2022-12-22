@@ -8,6 +8,7 @@ use GrayMatterLabs\Experiment\Contracts\Experiment;
 use GrayMatterLabs\Experiment\Contracts\Persistence;
 use GrayMatterLabs\Experiment\Contracts\Sample;
 use GrayMatterLabs\Experiment\Contracts\Variant;
+use GrayMatterLabs\Experiment\Support\Variants;
 use Psr\SimpleCache\CacheInterface;
 
 class SimpleCachePersistence implements Persistence
@@ -27,7 +28,7 @@ class SimpleCachePersistence implements Persistence
             return null;
         }
 
-        return $experiment->getVariantByName($name);
+        return (new Variants(...$experiment->getVariants()))->whereName($name);
     }
 
     public function removeSampleFromExperiment(Experiment $experiment, Sample $sample): bool

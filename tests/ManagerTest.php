@@ -17,14 +17,6 @@ use PHPUnit\Framework\TestCase;
 
 class ManagerTest extends TestCase
 {
-    public function test_it_gets_the_same_variant_multiple_times(): void
-    {
-        $manager = $this->getManager();
-        $sample = new MockSample();
-        $variant = $manager->allocate(MockExperiment::class, $sample);
-        $this->assertEquals($variant, $manager->allocate(MockExperiment::class, $sample));
-    }
-
     public function test_it_gets_a_new_variant(): void
     {
         $manager = $this->getManager();
@@ -46,7 +38,7 @@ class ManagerTest extends TestCase
         $manager = $this->getManager();
         $sample = new MockSample();
         $manager->force(MockExperiment::class, $sample, 'TEST');
-        $this->assertTrue($manager->allocate(MockExperiment::class, $sample)->equals('TEST'));
+        $this->assertEquals('TEST', $manager->allocate(MockExperiment::class, $sample)->getName());
     }
 
     public function test_it_determines_whether_a_sample_is_allocated(): void
@@ -62,9 +54,8 @@ class ManagerTest extends TestCase
     {
         $manager = $this->getManager();
         $sample = new MockSample();
-        $this->assertNull($manager->getVariant(MockExperiment::class, $sample));
-        $manager->force(MockExperiment::class, $sample, 'TEST');
-        $this->assertNotNull($manager->getVariant(MockExperiment::class, $sample));
+        $variant = $manager->allocate(MockExperiment::class, $sample);
+        $this->assertEquals($variant, $manager->allocate(MockExperiment::class, $sample));
     }
 
     public function test_it_requires_the_experiment_have_variants(): void

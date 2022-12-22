@@ -10,7 +10,7 @@ How you choose to implement your `GrayMatterLabs\Experiment\Contracts\Factory` w
 
 Similarly, you may choose to and are encouraged to configure your experiments in a dynamic and/or data-backed way by instantiating them with data from any number of storage mechanisms as well as in any shape you see fit.
 
-In general, this package attempts to not strictly enforce opinions as much as possible but rather provide an open-ended framework for A/B testing that minimizes complexity and overhead.
+In general, this package attempts to not strictly enforce opinions as much as possible but rather provide an open-ended framework for A/B testing that minimizes complexity and overhead. You are encouraged to bring your own concrete implementations of the provided interfaces. You can, however, lean into the implementations provided for you.
 
 ## Installation
 
