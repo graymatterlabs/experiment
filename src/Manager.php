@@ -13,33 +13,33 @@ use GrayMatterLabs\Experiment\Contracts\Variant;
 use GrayMatterLabs\Experiment\Support\Variants;
 use InvalidArgumentException;
 
-class Manager
+final class Manager
 {
-    public function __construct(protected Persistence $persistence, protected Factory $factory, protected Strategy $strategy)
+    public function __construct(private Persistence $persistence, private Factory $factory, private Strategy $strategy)
     {
     }
 
-    public function allocate(string $experiment, Sample $sample): ?Variant
+    public function allocate(string $experiment, Sample $sample): Allocation
     {
         $instance = $this->getExperimentInstance($experiment);
 
         if ($variant = $this->persistence->getVariantForSample($instance, $sample)) {
-            return $variant;
+            return new Allocation($sample, $instance, $variant);
         }
 
         if (! $instance->isEnabled() || empty($instance->getVariants()) || ! $instance->isEligible($sample)) {
-            return null;
+            return new Allocation($sample, $instance);
         }
 
         if (! $variant = $this->strategy->execute($instance, $sample)) {
-            return null;
+            return new Allocation($sample, $instance);
         }
 
         $instance->apply($sample, $variant);
 
         $this->persistence->setVariantForSample($instance, $sample, $variant);
 
-        return $variant;
+        return new Allocation($sample, $instance, $variant, true);
     }
 
     public function getVariant(string $experiment, Sample $sample): ?Variant

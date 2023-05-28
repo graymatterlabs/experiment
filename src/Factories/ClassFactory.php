@@ -8,7 +8,7 @@ use GrayMatterLabs\Experiment\Contracts\Experiment;
 use GrayMatterLabs\Experiment\Contracts\Factory;
 use InvalidArgumentException;
 
-class ClassFactory implements Factory
+final class ClassFactory implements Factory
 {
     public function make(string $experiment): Experiment
     {

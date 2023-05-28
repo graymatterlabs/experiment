@@ -9,7 +9,7 @@ use GrayMatterLabs\Experiment\Contracts\Sample;
 use GrayMatterLabs\Experiment\Contracts\Strategy;
 use GrayMatterLabs\Experiment\Contracts\Variant;
 
-class WeightedStrategy implements Strategy
+final class WeightedStrategy implements Strategy
 {
     public function execute(Experiment $experiment, Sample $sample): ?Variant
     {

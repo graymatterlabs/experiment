@@ -20,4 +20,9 @@ interface Variant
      * Get the variant's weight.
      */
     public function getWeight(): int;
+
+    /**
+     * Determine whether two variants are the same.
+     */
+    public function is(string|int|Variant $variant): bool;
 }

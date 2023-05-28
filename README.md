@@ -26,15 +26,21 @@ composer require graymatterlabs/experiment:^0.1
 $manager = new Manager($persistence, $factory, $strategy);
 $sample = new Sample();
 
-$variant = $manager->allocate($experiment, $sample);
+$allocation = $manager->allocate($experiment, $sample);
 
-if ($variant && $variant->equals('TEST')) {
+if (! $allocation->isAllocated()) {
+    // unable to allocate
+}
+
+if ($allocation->isVariant('TEST')) {
     // execute experimental feature
 }
-```
-> Note: Usage of the `GrayMatterLabs\Experiment\Persistence\SimpleCachePersistence` requires you add `psr/simple-cache:^3.0` as a project dependency.
 
-For examples of usage and implementation, please check out the `tests/` directory.
+if ($allocation->wasRecentlyAllocated) {
+    // the allocation is new
+}
+```
+> Note: Usage of `GrayMatterLabs\Experiment\Persistence\SimpleCachePersistence` requires you satisfy the `Psr\SimpleCache\CacheInterface` interface. See graymatterlabs/simple-cache or bring your own implementation.
 
 ## Testing
 
