@@ -17,7 +17,7 @@ In general, this package attempts to not strictly enforce opinions as much as po
 You can install the package via composer:
 
 ```bash
-composer require graymatterlabs/experiment:^0.1
+composer require graymatterlabs/experiment:^0.3
 ```
 
 ## Usage
