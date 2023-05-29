@@ -8,7 +8,7 @@ use GrayMatterLabs\Experiment\Contracts\Variant;
 
 final class Variants
 {
-    protected array $variants;
+    private array $variants;
 
     public function __construct(Variant ...$variants)
     {

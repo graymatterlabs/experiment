@@ -7,7 +7,7 @@ namespace GrayMatterLabs\Experiment\Factories;
 use GrayMatterLabs\Experiment\Contracts\Experiment;
 use GrayMatterLabs\Experiment\Contracts\Factory;
 
-class MemoizedFactory implements Factory
+final class MemoizedFactory implements Factory
 {
     /**
      * @var Experiment[]

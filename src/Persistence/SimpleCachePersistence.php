@@ -11,9 +11,9 @@ use GrayMatterLabs\Experiment\Contracts\Variant;
 use GrayMatterLabs\Experiment\Support\Variants;
 use Psr\SimpleCache\CacheInterface;
 
-class SimpleCachePersistence implements Persistence
+final class SimpleCachePersistence implements Persistence
 {
-    public function __construct(protected CacheInterface $cache)
+    public function __construct(private CacheInterface $cache)
     {
     }
 
@@ -36,7 +36,7 @@ class SimpleCachePersistence implements Persistence
         return $this->cache->delete($this->getAllocationCacheKey($experiment, $sample));
     }
 
-    protected function getAllocationCacheKey(Experiment $experiment, Sample $sample): string
+    private function getAllocationCacheKey(Experiment $experiment, Sample $sample): string
     {
         return sprintf('allocation:%s:%s', $experiment->getName(), $sample->getIdentifier());
     }
